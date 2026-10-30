@@ -1,0 +1,7 @@
+Options -Indexes
+RewriteEngine On
+RewriteRule ^Login\.html$ secure-login.php [NC,L]
+RewriteRule ^Register\.html$ secure-register.php [NC,L]
+RewriteRule ^DashBoard\.html$ student-dashboard.php [NC,L]
+RewriteRule ^Dashboard\.html$ student-dashboard.php [NC,L]
+RewriteRule ^Profile\.html$ student-profile.php [NC,L]

@@ -1,0 +1,27 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="style.css"><title>StudentHub API Test</title></head><body><header><h1>StudentHub</h1><p>AJAX and Fetch API</p></header><nav><a href="admin-dashboard.php">Admin Dashboard</a> | <a href="index.html">Home</a></nav><main><section><h2>Student Records via Fetch API</h2><p>This page requests student records from the protected PHP JSON API without reloading the page.</p><button id="load">Load Students</button><p id="status" role="status"></p><div id="output"></div></section></main><script>
+document.getElementById('load').addEventListener('click', async function () {
+    const status = document.getElementById('status');
+    const output = document.getElementById('output');
+    status.textContent = 'Loading...';
+    try {
+        const response = await fetch('api/students.php', {headers: {'Accept': 'application/json'}});
+        const result = await response.json();
+        if (!response.ok || !result.success) throw new Error(result.message || 'Unable to load students');
+        output.replaceChildren();
+        result.data.forEach(function (student) {
+            const article = document.createElement('article');
+            const heading = document.createElement('h3');
+            heading.textContent = student.name;
+            const email = document.createElement('p');
+            email.textContent = 'Email: ' + student.email;
+            const course = document.createElement('p');
+            course.textContent = 'Course: ' + student.course;
+            article.append(heading, email, course);
+            output.appendChild(article);
+        });
+        status.textContent = result.data.length + ' student record(s) loaded.';
+    } catch (error) {
+        status.textContent = error.message;
+    }
+});
+</script></body></html>
